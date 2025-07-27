@@ -1,8 +1,6 @@
 import { useState } from "react";
 
-function TodoList() {
-    const listItems = ["Kate", "Kārlis", "Elza"];
-
+function TodoList({items, heading, onSelectItem}) {
     let getClassName = function(index) {
         return `list-item ${selectedIndex === index ? "active" : ""}`;
     }
@@ -10,15 +8,18 @@ function TodoList() {
     const [selectedIndex, setSelectedIndex] = useState(-1);
     return (
         <>
+            <h1>{heading}</h1>
             <div>
                 <ul>
-                    {listItems.map(function(item, i){
+                    {items.map(function(item, i){
                         return <li
                             key={item}
                             className={getClassName(i)}
                             onClick={
-                                () =>
-                                    setSelectedIndex(i)
+                                () => {
+                                    setSelectedIndex(i);
+                                    onSelectItem(item);
+                                }
                             }
                         >{item}</li>;
                     })}
